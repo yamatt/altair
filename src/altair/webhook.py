@@ -1,6 +1,7 @@
+from typing import Annotated
 from http import HTTPStatus
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Depends, Request, Response
 
 from telegram import Update
 from telegram.ext import Application
@@ -12,7 +13,7 @@ from log import log
 webhook = FastAPI()
 
 
-async def initialise(_: FastAPI):
+async def initialise_bot(_: FastAPI):
     log.info("INITIALISED BOT")
     async with bot:
         await bot.start()
@@ -27,7 +28,7 @@ async def healthcheck():
 
 
 @webhook.post("/setup")
-async def setup(initialised_bot: Annotated[Application, Depends(initialise)]):
+async def setup(initialised_bot: Annotated[Application, Depends(initialise_bot)]):
     """
     Sets up Telegram for Webhooks
     """
@@ -38,7 +39,7 @@ async def setup(initialised_bot: Annotated[Application, Depends(initialise)]):
 
 @webhook.post("/")
 async def process_update(
-    request: Request, initialised_bot: Annotated[Application, Depends(initialise)]
+    request: Request, initialised_bot: Annotated[Application, Depends(initialise_bot)]
 ):
     log.info("WEBHOOK")
     req = await request.json()
