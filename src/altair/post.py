@@ -33,4 +33,4 @@ class Post:
 
     @property
     def branch_name(self) -> str:
-        return "blog-post/f{self._branch_slug}"
+        return f"blog-post/f{self._branch_slug}"
