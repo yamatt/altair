@@ -4,7 +4,7 @@ FROM python:3.12.2-slim-bullseye
 ENV PYTHONUNBUFFERED True
 ENV APP_HOME /
 WORKDIR $APP_HOME
-COPY ./altair ./
+COPY ./src/altair ./
 
 RUN PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir -r requirements.lock
 
