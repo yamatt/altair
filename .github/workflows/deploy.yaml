@@ -8,11 +8,31 @@ on:
 
 permissions:
     contents: read
-    
+
 jobs:
+    linting:
+        name: Run Black
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - uses: actions/checkout@v4
+            - uses: eifinger/setup-rye@v2
+            - run: rye run black src
+    security-scanner:
+        name: Run Bandit
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - uses: actions/checkout@v4
+            - uses: eifinger/setup-rye@v2
+            - run: rye run bandit src/altair
+
     deploy:
         name: Deploy app to Fly.io
         runs-on: ubuntu-latest
+        needs:
+            - linting
+            - security-scanner
         environment: production
         steps:
             - uses: actions/checkout@v4

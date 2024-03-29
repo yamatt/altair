@@ -4,8 +4,10 @@ from telegram.ext._contexttypes import ContextTypes
 
 from secrets import Secrets
 
+
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f'Hello {update.effective_user.first_name}')
+    await update.message.reply_text(f"Hello {update.effective_user.first_name}")
+
 
 bot = (
     Application.builder()
@@ -16,8 +18,10 @@ bot = (
     .build()
 )
 
+
 async def start(update, _: ContextTypes.DEFAULT_TYPE):
     """Send a message when the command /start is issued."""
     await update.message.reply_text("starting...")
+
 
 bot.add_handler(CommandHandler("start", start))
