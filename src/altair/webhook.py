@@ -3,6 +3,8 @@ from http import HTTPStatus
 
 from fastapi import FastAPI, Request, Response
 
+from telegram import Update
+
 from bot import bot
 from secrets import Secrets
 
