@@ -10,7 +10,7 @@ async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 bot = (
     Application.builder()
     .updater(None)
-    .token(Secrets.TELEGRAM_API_TOKEN) # replace <your-bot-token>
+    .token(Secrets.TELEGRAM_API_TOKEN)
     .read_timeout(7)
     .get_updates_read_timeout(42)
     .build()
