@@ -33,7 +33,7 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     new_post = Post.from_telegram(context)
     await update.message.reply_markdown(
-        f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`"
+        f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
     )
 
 
