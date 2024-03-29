@@ -3,6 +3,7 @@ from telegram.ext import Application, CommandHandler
 from telegram.ext._contexttypes import ContextTypes
 
 from secrets import Secrets
+from log import log
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -21,6 +22,7 @@ bot = (
 
 async def start(update, _: ContextTypes.DEFAULT_TYPE):
     """Send a message when the command /start is issued."""
+    log.info("BOT START")
     await update.message.reply_text("starting...")
 
 
