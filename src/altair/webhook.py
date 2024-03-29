@@ -7,7 +7,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler
 from telegram.ext._contexttypes import ContextTypes
 
-from .bot import bot
+from bot import bot
 
 webhook = FastAPI()
 
