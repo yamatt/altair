@@ -4,6 +4,7 @@ from telegram.ext._contexttypes import ContextTypes
 
 from secrets import Secrets
 from log import log
+from post import Post
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -23,14 +24,17 @@ bot = (
 async def start(update, _: ContextTypes.DEFAULT_TYPE):
     """Send a message when the command /start is issued."""
     log.info("BOT START")
-    await update.message.reply_markdown("Hello. Please type `/new <name>` to start a new post")
+    await update.message.reply_markdown(
+        "Hello. Please type `/new <name>` to start a new post"
+    )
 
 
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
-    title: str = " ".join(context.args)
-    await update.message.reply_markdown(f"Your new blog post title will be _{title}_")
-    # start branch
+    new_post = Post.from_telegram(context)
+    await update.message.reply_markdown(
+        f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`"
+    )
 
 
 bot.add_handler(CommandHandler("start", start))
