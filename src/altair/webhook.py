@@ -20,12 +20,12 @@ async def lifespan(webhook: FastAPI):
 
 
 @webhook.get("/healthcheck")
-def healthcheck():
+async def healthcheck():
     return {"status": "ok"}
 
 
 @webhook.post("/setup")
-def setup():
+async def setup():
     """
     Sets up Telegram for Webhooks
     """
@@ -34,7 +34,7 @@ def setup():
 
 
 @webhook.post("/")
-def process_update(request: Request):
+async def process_update(request: Request):
     req = await request.json()
     update = Update.de_json(req, bot.bot)
     await bot.process_update(update)
