@@ -28,12 +28,12 @@ async def healthcheck():
 
 
 @webhook.post("/setup")
-async def setup(initialised_bot: Annotated[Application, Depends(initialise_bot)]):
+async def setup():
     """
     Sets up Telegram for Webhooks
     """
     log.info("SETUP")
-    await initialised_bot.bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
+    await bot.bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
     return {"status": "ok"}
 
 
