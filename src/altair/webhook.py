@@ -4,6 +4,7 @@ from http import HTTPStatus
 from fastapi import FastAPI, Request, Response
 
 from bot import bot
+from secrets import Secrets
 
 webhook = FastAPI()
 
@@ -18,6 +19,15 @@ async def lifespan(webhook: FastAPI):
 
 @webhook.get("/healthcheck")
 def healthcheck():
+    return {"status": "ok"}
+
+
+@webhook.post("/setup")
+def setup():
+    """
+    Sets up Telegram for Webhooks
+    """
+    bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
     return {"status": "ok"}
 
 
