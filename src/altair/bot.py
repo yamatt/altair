@@ -23,13 +23,14 @@ bot = (
 async def start(update, _: ContextTypes.DEFAULT_TYPE):
     """Send a message when the command /start is issued."""
     log.info("BOT START")
-    await update.message.reply_text("Hello. Please type `/new <name>` to start a new post")
+    await update.message.reply_markdown("Hello. Please type `/new <name>` to start a new post")
 
 
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     title: str = " ".join(context.args)
-    await update.message.reply_text(f"Your new blog post title will be _{title}_")
+    await update.message.reply_markdown(f"Your new blog post title will be _{title}_")
+    # start branch
 
 
 bot.add_handler(CommandHandler("start", start))
