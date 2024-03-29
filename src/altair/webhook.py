@@ -27,7 +27,7 @@ def setup():
     """
     Sets up Telegram for Webhooks
     """
-    bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
+    bot.bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
     return {"status": "ok"}
 
 
