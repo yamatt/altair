@@ -13,7 +13,7 @@ from log import log
 webhook = FastAPI()
 
 
-async def initialise_bot(_: FastAPI):
+async def initialise_bot(_: FastAPI) -> Generator:
     log.info("INITIALISED BOT")
     async with bot:
         await bot.start()
@@ -39,7 +39,7 @@ async def setup():
 
 @webhook.post("/")
 async def process_update(
-    request: Request, initialised_bot: Annotated[Application, Depends(initialise_bot)]
+    request: Request, initialised_bot: Application = Depends(initialise_bot)
 ):
     log.info("WEBHOOK")
     req = await request.json()
