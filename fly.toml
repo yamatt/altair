@@ -16,3 +16,7 @@ primary_region = 'lhr'
 
 [[vm]]
   size = 'shared-cpu-1x'
+
+[deploy]
+  strategy = "immediate"
+
