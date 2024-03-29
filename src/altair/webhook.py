@@ -12,6 +12,13 @@ from log import log
 
 webhook = FastAPI()
 
+# Dependency
+def get_bot():
+    async with bot:
+        await bot.start()
+        yield bot
+        await bot.stop()
+
 
 @webhook.get("/healthcheck")
 async def healthcheck():
@@ -30,14 +37,11 @@ async def setup():
 
 
 @webhook.post("/")
-async def process_update(request: Request):
+async def process_update(request: Request, initialised_bot: Application = Depends(get_bot)):
     log.info("WEBHOOK")
     req = await request.json()
 
-    async with bot:
-        await bot.start()
-        update = Update.de_json(req, bot.bot)
-        await bot.process_update(update)
-        await bot.stop()
+    update = Update.de_json(req, initialised_bot.bot)
+    await initialised_bot.process_update(update)
 
     return Response(status_code=HTTPStatus.OK)
