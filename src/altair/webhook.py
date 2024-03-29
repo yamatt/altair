@@ -13,7 +13,7 @@ from log import log
 webhook = FastAPI()
 
 # Dependency
-def get_bot():
+async def get_bot():
     async with bot:
         await bot.start()
         yield bot
