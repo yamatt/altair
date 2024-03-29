@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Generator
 from http import HTTPStatus
 
 from fastapi import FastAPI, Depends, Request, Response
