@@ -1,5 +1,6 @@
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler
+from telegram.ext._contexttypes import ContextTypes
 
 from secrets import Secrets
 
