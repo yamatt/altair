@@ -12,6 +12,7 @@ from log import log
 
 webhook = FastAPI()
 
+
 # Dependency
 async def get_bot():
     async with bot:
@@ -37,7 +38,9 @@ async def setup():
 
 
 @webhook.post("/")
-async def process_update(request: Request, initialised_bot: Application = Depends(get_bot)):
+async def process_update(
+    request: Request, initialised_bot: Application = Depends(get_bot)
+):
     log.info("WEBHOOK")
     req = await request.json()
 
