@@ -7,7 +7,7 @@ from telegram import Update
 from telegram.ext import Application
 
 from bot import bot
-from secrets import Secrets
+from config import Config
 from log import log
 
 webhook = FastAPI()
@@ -33,7 +33,7 @@ async def setup():
     Sets up Telegram for Webhooks
     """
     log.info("SETUP")
-    await bot.bot.set_webhook(Secrets.TELEGRAM_WEBHOOK_URL)
+    await bot.bot.set_webhook(Config.TELEGRAM_WEBHOOK_URL)
     return {"status": "ok"}
 
 
