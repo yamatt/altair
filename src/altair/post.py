@@ -3,6 +3,10 @@ from datetime import datetime, timezone
 from slugify import slugify
 
 
+class Paragraph:
+    pass
+
+
 class Post:
     @staticmethod
     def generate_default_title_name():
@@ -20,8 +24,10 @@ class Post:
             title = cls.generate_default_title_name()
         return cls(title)
 
-    def __init__(self, title):
-        self._title = title
+    def __init__(self, title: str):
+        self._title: str = title
+        self._paragraphs: dict = {}
+        self._paragraph_order: list = []
 
     @property
     def title(self) -> str:
@@ -34,3 +40,32 @@ class Post:
     @property
     def branch_name(self) -> str:
         return f"blog-post/{self._branch_slug}"
+
+    def add_paragraph(self, paragraph: Paragraph) -> None:
+        self._paragraph_order.append(paragraph.id)
+        self._paragraphs[paragraph.id] = paragraph
+
+        self.update()
+
+    def update(self):
+        """
+        Creates branch and adds paragraphs to it in GitHub
+        """
+    
+    def text(self):
+        text: str = ""
+
+        for paragraph_id in self._paragraph_order:
+            text+=self._paragraphs[paragraph_id]
+            text+="\n\n"
+            
+        return text
+
+class Paragraph:
+    @classmethod
+    def from_update(cls, update):
+        return cls(update.message.message_id, update.message.text)
+
+    def __init__(self, id, text):
+        self.id = id
+        self.text = text

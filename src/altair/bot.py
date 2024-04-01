@@ -13,7 +13,7 @@ from telegram.ext import (
 
 from secrets import Secrets
 from log import log
-from post import Post
+from post import Post, Paragraph
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -49,7 +49,8 @@ async def start(update, _: ContextTypes.DEFAULT_TYPE):
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     await send_processing_action(update.effective_message.chat_id)
-    new_post = Post.from_telegram(context)
+    context.chat_data['post'] = Post.from_telegram(context)
+
     await update.message.reply_markdown(
         f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
     )
@@ -57,11 +58,11 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    log.info("WRITING MODE", context=dict(context))
+    log.info("WRITING MODE")
 
     await send_processing_action(update.effective_message.chat_id)
 
-    # update blog post
+    context.chat_data['post'].add_paragraph(Paragraph.from_update(update))
 
     return States.WRITING
 
