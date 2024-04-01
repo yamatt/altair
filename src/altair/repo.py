@@ -59,7 +59,7 @@ class Repo:
                 contents.sha,
                 branch=post.branch_name,
             )
-        except GithubException.UnknownObjectException:
+        except GithubException:
             self.repo.create_file(
                 post_file_path,
                 self.generate_commit_message(),
