@@ -1,7 +1,13 @@
 from telegram import Update
 from telegram.constants import ChatAction
-from telegram.ext import Application, CommandHandler, ConversationHandler
-from telegram.ext._contexttypes import ContextTypes
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ConversationHandler,
+    ContextTypes,
+    MessageHandler,
+    filters,
+)
 
 from secrets import Secrets
 from log import log
