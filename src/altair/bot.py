@@ -1,3 +1,5 @@
+from enum import Enum, auto
+
 from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import (
@@ -27,8 +29,8 @@ bot = (
     .build()
 )
 
-# States
-WRITING = 1
+class States(Enum):
+    WRITING = auto()
 
 
 async def send_processing_action(chat_id):
@@ -50,6 +52,7 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_markdown(
         f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
     )
+    return States.WRITING
 
 
 async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -59,7 +62,7 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # update blog post
 
-    return WRITING
+    return States.WRITING
 
 
 paragraphs = ConversationHandler(
