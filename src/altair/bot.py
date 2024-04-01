@@ -12,13 +12,17 @@ from telegram.ext import (
 )
 
 from secrets import Secrets
+from config import Config
 from log import log
 from post import Post, Paragraph
+
+from repo import Repo
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f"Hello {update.effective_user.first_name}")
 
+repo = Repo(Config, Secrets)
 
 bot = (
     Application.builder()
@@ -53,6 +57,8 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
 
     context.chat_data["post"] = new_post
 
+    repo.create_branch(new_post.branch_name)
+
     await update.message.reply_markdown(
         f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
     )
@@ -76,6 +82,8 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await send_processing_action(update.effective_message.chat_id)
 
     context.chat_data["post"].add_paragraph(Paragraph.from_update(update))
+
+    repo.update_post(context.chat_data["post"])
 
     return States.WRITING
 

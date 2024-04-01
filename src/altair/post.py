@@ -29,6 +29,8 @@ class Post:
         self._paragraphs: dict = {}
         self._paragraph_order: list = []
 
+        self._created = datetime.now(timezone.utc)
+
     @property
     def title(self) -> str:
         return self._title
@@ -67,6 +69,18 @@ class Post:
 
         return text
 
+    def file_contents(self):
+        return = """---
+title: "{self.title}"
+date: {now:%Y-%m-%dT%T%:z}
+slug: ""
+description: ""
+keywords: []
+draft: true
+tags: []
+math: false
+toc: false
+---\n\n{self.text()}"""
 
 class Paragraph:
     @classmethod
