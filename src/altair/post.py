@@ -42,8 +42,11 @@ class Post:
         return f"blog-post/{self._branch_slug}"
 
     def add_paragraph(self, paragraph: Paragraph) -> None:
-        self._paragraph_order.append(paragraph.id)
+
+        if paragraph.id not in self._paragraph_order:
+            self._paragraph_order.append(paragraph.id)
         self._paragraphs[paragraph.id] = paragraph
+            
 
         self.update()
 
@@ -58,7 +61,7 @@ class Post:
         for paragraph_id in self._paragraph_order:
             text+=self._paragraphs[paragraph_id]
             text+="\n\n"
-            
+
         return text
 
 class Paragraph:
