@@ -70,7 +70,7 @@ class Post:
         return text
 
     def file_contents(self):
-        return """---
+        return f"""---
 title: "{self.title}"
 date: {now:%Y-%m-%dT%T%:z}
 slug: ""
