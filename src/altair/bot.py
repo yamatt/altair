@@ -58,6 +58,12 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
     )
     return States.WRITING
 
+async def text(update, context: ContextTypes.DEFAULT_TYPE):
+    log.info("WRITING TEXT")
+
+    await update.message.reply_text(context.chat_data['post'].text)
+    return States.WRITING
+
 
 async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     log.info("WRITING MODE")
@@ -72,7 +78,7 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 paragraphs = ConversationHandler(
     entry_points=[CommandHandler("new", new)],
     states={States.WRITING: [MessageHandler(filters.Regex(".*"), writing)]},
-    fallbacks=[CommandHandler("new", new)],
+    fallbacks=[CommandHandler("new", new), CommandHandler("text", text)],
 )
 
 bot.add_handler(CommandHandler("start", start))
