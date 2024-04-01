@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
-from github import Github, Auth as GithubAuth
+from github import Github, Auth as GithubAuth, GithubException
+from github import  import UnknownObjectException
 
 from config import Config
 from secrets import Secrets
@@ -18,7 +19,7 @@ class Repo:
         return f"draft-"
 
     @staticmethod
-    def get_commit_message():
+    def generate_commit_message():
         now = datetime.now(timezone.utc)
         return f"Altair-automated-commit-{now:%Y-%m-%dT%H:%M}"
 
@@ -50,11 +51,19 @@ class Repo:
 
     def update_post(self, post: Post):
         post_file_path = self.get_post_file_path(post)
-        contents = self.repo.get_contents(post_file_path, ref=post.branch_name)
-        self.repo.update_file(
-            post_file_path,
-            "message",
-            post.file_contents(),
-            contents.sha,
-            branch=post.branch_name,
-        )
+        try:
+            contents = self.repo.get_contents(post_file_path, ref=post.branch_name)
+            self.repo.update_file(
+                post_file_path,
+                self.generate_commit_message(),
+                post.file_contents(),
+                contents.sha,
+                branch=post.branch_name,
+            )
+        except GithubException.UnknownObjectException:
+            self.repo.create_file(
+                post_file_path,
+                self.generate_commit_message(),
+                post.file_contents(),
+                branch=post.branch_name,
+            )
