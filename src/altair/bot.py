@@ -51,17 +51,18 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
     await send_processing_action(update.effective_message.chat_id)
     new_post = Post.from_telegram(context)
 
-    context.chat_data['post'] = new_post
+    context.chat_data["post"] = new_post
 
     await update.message.reply_markdown(
         f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
     )
     return States.WRITING
 
+
 async def text(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("WRITING TEXT")
 
-    await update.message.reply_text(context.chat_data['post'].text)
+    await update.message.reply_text(context.chat_data["post"].text)
     return States.WRITING
 
 
@@ -70,7 +71,7 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     await send_processing_action(update.effective_message.chat_id)
 
-    context.chat_data['post'].add_paragraph(Paragraph.from_update(update))
+    context.chat_data["post"].add_paragraph(Paragraph.from_update(update))
 
     return States.WRITING
 

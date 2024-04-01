@@ -46,7 +46,6 @@ class Post:
         if paragraph.id not in self._paragraph_order:
             self._paragraph_order.append(paragraph.id)
         self._paragraphs[paragraph.id] = paragraph
-            
 
         self.update()
 
@@ -54,15 +53,16 @@ class Post:
         """
         Creates branch and adds paragraphs to it in GitHub
         """
-    
+
     def text(self):
         text: str = ""
 
         for paragraph_id in self._paragraph_order:
-            text+=self._paragraphs[paragraph_id]
-            text+="\n\n"
+            text += self._paragraphs[paragraph_id]
+            text += "\n\n"
 
         return text
+
 
 class Paragraph:
     @classmethod
