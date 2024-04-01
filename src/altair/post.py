@@ -38,6 +38,10 @@ class Post:
         return slugify(self.title)
 
     @property
+    def file_name(self) -> str:
+        return f"{self._branch_slug}.md"
+
+    @property
     def branch_name(self) -> str:
         return f"blog-post/{self._branch_slug}"
 
