@@ -39,9 +39,13 @@ class Repo:
     def repo(self):
         return self.client.get_repo(self.config.GITHUB_REPO)
 
+    @property
+    def default_branch(self):
+        return self.repo.get_branch(self.repo.default_branch)
+
     def create_branch(self, branch_name: str):
         self.repo.create_git_ref(
-            ref=f"refs/heads/{branch_name}", sha=self.repo.default_branch.commit.sha
+            ref=f"refs/heads/{branch_name}", sha=self.default_branch.commit.sha
         )
 
     def update_post(self, post: Post):
