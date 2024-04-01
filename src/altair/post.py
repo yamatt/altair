@@ -62,7 +62,7 @@ class Post:
         text: str = ""
 
         for paragraph_id in self._paragraph_order:
-            text += self._paragraphs[paragraph_id]
+            text += self._paragraphs[paragraph_id].text
             text += "\n\n"
 
         return text
