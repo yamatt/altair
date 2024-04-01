@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 
 from github import Github, Auth as GithubAuth, GithubException
-from github import  import UnknownObjectException
 
 from config import Config
 from secrets import Secrets
