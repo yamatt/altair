@@ -70,7 +70,7 @@ class Post:
         return text
 
     def file_contents(self):
-        return = """---
+        return """---
 title: "{self.title}"
 date: {now:%Y-%m-%dT%T%:z}
 slug: ""
@@ -81,6 +81,7 @@ tags: []
 math: false
 toc: false
 ---\n\n{self.text()}"""
+
 
 class Paragraph:
     @classmethod

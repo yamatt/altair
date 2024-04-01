@@ -22,6 +22,7 @@ from repo import Repo
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f"Hello {update.effective_user.first_name}")
 
+
 repo = Repo(Config, Secrets)
 
 bot = (

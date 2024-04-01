@@ -12,7 +12,6 @@ class Repo:
     def get_post_file_path(post: Post):
         return f"{Config.REPO_BLOG_POST_PATH}/{post.file_name}"
 
-
     @staticmethod
     def generate_default_title_name():
         now = datetime.now(timezone.utc)
@@ -23,13 +22,11 @@ class Repo:
         now = datetime.now(timezone.utc)
         return f"Altair-automated-commit-{now:%Y-%m-%dT%H:%M}"
 
-
     def __init__(self, config: Config, secrets: Secrets):
         self.config = config
         self._secrets = Secrets
 
         self._client = None
-
 
     @property
     def client(self):
@@ -43,9 +40,17 @@ class Repo:
         return self.client.get_repo(self.config.GITHUB_REPO)
 
     def create_branch(self, branch_name: str):
-        self.repo.create_git_ref(ref=f"refs/heads/{branch_name}", sha=self.repo.default_branch.commit.sha)
+        self.repo.create_git_ref(
+            ref=f"refs/heads/{branch_name}", sha=self.repo.default_branch.commit.sha
+        )
 
     def update_post(self, post: Post):
         post_file_path = self.get_post_file_path(post)
         contents = self.repo.get_contents(post_file_path, ref=post.branch_name)
-        self.repo.update_file(post_file_path, "message", post.file_contents(), contents.sha, branch=post.branch_name)
+        self.repo.update_file(
+            post_file_path,
+            "message",
+            post.file_contents(),
+            contents.sha,
+            branch=post.branch_name,
+        )
