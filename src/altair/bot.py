@@ -62,7 +62,7 @@ async def new(update, context: ContextTypes.DEFAULT_TYPE):
 async def text(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("WRITING TEXT")
 
-    await update.message.reply_text(context.chat_data["post"].text)
+    await update.message.reply_text(context.chat_data["post"].text())
     return States.WRITING
 
 
