@@ -29,6 +29,7 @@ bot = (
     .build()
 )
 
+
 class States(Enum):
     WRITING = auto()
 
@@ -67,7 +68,7 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 paragraphs = ConversationHandler(
     entry_points=[CommandHandler("new", new)],
-    states={WRITING: [MessageHandler(filters.Regex(".*"), writing)]},
+    states={States.WRITING: [MessageHandler(filters.Regex(".*"), writing)]},
     fallbacks=[CommandHandler("new", new)],
 )
 
