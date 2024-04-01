@@ -49,7 +49,9 @@ async def start(update, _: ContextTypes.DEFAULT_TYPE):
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     await send_processing_action(update.effective_message.chat_id)
-    context.chat_data['post'] = Post.from_telegram(context)
+    new_post = Post.from_telegram(context)
+
+    context.chat_data['post'] = new_post
 
     await update.message.reply_markdown(
         f"Your new blog post title will be _{new_post.title}_ with branch name `{new_post.branch_name}`. Please start writing the blog post."
