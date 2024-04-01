@@ -67,7 +67,7 @@ async def text(update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    log.info("WRITING MODE")
+    log.info("WRITING MODE", message_id=update.message.message_id, message_text=update.message.text)
 
     await send_processing_action(update.effective_message.chat_id)
 
@@ -78,7 +78,7 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 paragraphs = ConversationHandler(
     entry_points=[CommandHandler("new", new)],
-    states={States.WRITING: [MessageHandler(filters.Regex(".*"), writing)]},
+    states={States.WRITING: [MessageHandler(filters.Regex(r"^[^\/].*$"), writing)]},
     fallbacks=[CommandHandler("new", new), CommandHandler("text", text)],
 )
 
