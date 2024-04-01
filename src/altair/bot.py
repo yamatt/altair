@@ -54,7 +54,7 @@ async def start(update, _: ContextTypes.DEFAULT_TYPE):
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     await send_processing_action(update.effective_message.chat_id)
-    new_post = Post.from_telegram(context)
+    new_post = Post.from_new(context)
 
     context.chat_data["post"] = new_post
 
@@ -82,9 +82,14 @@ async def writing(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     await send_processing_action(update.effective_message.chat_id)
 
-    context.chat_data["post"].add_paragraph(Paragraph.from_update(update))
+    if context.chat_data.get("post"):
+        context.chat_data["post"].add_paragraph(Paragraph.from_update(update))
+        repo.update_post(context.chat_data["post"])
 
-    repo.update_post(context.chat_data["post"])
+    else:
+        await update.message.reply_markdown(
+            f"No new post found. You will have to start a new one."
+        )
 
     return States.WRITING
 
