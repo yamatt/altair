@@ -31,7 +31,7 @@ class Repo:
     @property
     def client(self):
         if not self._client:
-            auth = GithubAuth.Token(self.secrets.GITHUB_FINEGRAINED_TOKEN)
+            auth = GithubAuth.Token(self._secrets.GITHUB_FINEGRAINED_TOKEN)
             self._client = Github(auth=auth)
         return self._client
 
