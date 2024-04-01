@@ -1,10 +1,15 @@
-# fly.toml app configuration file generated for altair-piu1u on 2024-03-29T12:46:39Z
+# fly.toml app configuration file generated for altair-piu1u on 2024-04-01T09:49:31+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'altair-piu1u'
 primary_region = 'lhr'
+
+[build]
+
+[deploy]
+  strategy = 'immediate'
 
 [http_service]
   internal_port = 8080
@@ -16,7 +21,3 @@ primary_region = 'lhr'
 
 [[vm]]
   size = 'shared-cpu-1x'
-
-[deploy]
-  strategy = "immediate"
-
