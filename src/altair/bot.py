@@ -35,7 +35,7 @@ class States(Enum):
 
 
 async def send_processing_action(chat_id):
-    await bot.send_chat_action(chat_id, ChatAction.TYPING)
+    await bot.bot.send_chat_action(chat_id, ChatAction.TYPING)
 
 
 async def start(update, _: ContextTypes.DEFAULT_TYPE):
