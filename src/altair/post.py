@@ -72,7 +72,7 @@ class Post:
     def file_contents(self):
         return f"""---
 title: "{self.title}"
-date: {now:%Y-%m-%dT%T%:z}
+date: {self._created:%Y-%m-%dT%T%:z}
 slug: ""
 description: ""
 keywords: []
