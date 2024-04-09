@@ -54,7 +54,7 @@ async def start(update, _: ContextTypes.DEFAULT_TYPE):
 async def new(update, context: ContextTypes.DEFAULT_TYPE):
     log.info("BOT NEW")
     await send_processing_action(update.effective_message.chat_id)
-    new_post = Post.from_new(context)
+    new_post = Post.from_telegram(context)
 
     context.chat_data["post"] = new_post
 
