@@ -8,6 +8,9 @@ primary_region = 'lhr'
 
 [build]
 
+[env]
+  APPROVED_USER = "444943133"
+
 [deploy]
   strategy = 'immediate'
 
