@@ -51,6 +51,7 @@ async def process_update(
     if user_id != Config.APPROVED_USER:
         # Ignore all messages that aren't from Matt, return stub response.
         # We want to tell Telegram the payload is OK, just not the right user.
+        log.info("USER ID INVALID", user_id=user_id, valid_id=Config.APPROVED_USER)
         return Response(status_code=HTTPStatus.OK)
 
     update = Update.de_json(req, initialised_bot.bot)
