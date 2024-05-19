@@ -44,19 +44,12 @@ async def process_update(
     log.info("WEBHOOK")
     req = await request.json()
 
-    user_id: str = req["message"]["chat"]["id"]
-
-    log.info(
-        "REQUEST",
-        user_id=user_id,
-        user_id_type=type(user_id),
-        valid_id_type=type(Config.APPROVED_USER),
-    )
+    user_id: str = str(req["message"]["chat"]["id"])
 
     if user_id != Config.APPROVED_USER:
         # Ignore all messages that aren't from the approved user, return stub response.
         # We want to tell Telegram the payload is OK, just not the right user.
-        log.info("USER ID INVALID", user_id=user_id, valid_id=Config.APPROVED_USER)
+        log.info("USER ID INVALID", user_id=user_id)
         return Response(status_code=HTTPStatus.OK)
 
     update = Update.de_json(req, initialised_bot.bot)
