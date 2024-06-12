@@ -19,7 +19,7 @@ jobs:
       - uses: eifinger/setup-rye@v2
       - run: |
           rye sync
-          rye run black src
+          rye run black --check --diff src
   security-scanner:
     name: Run Bandit
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
       - uses: eifinger/setup-rye@v2
       - run: |
           rye sync
-          rye run bandit src/altair
+          rye run bandit -r src/altair
 
   deploy:
     name: Deploy app to Fly.io
